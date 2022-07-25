@@ -1,20 +1,19 @@
 package ru.practicum.shareit.user.service;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.storage.UserStorage;
-import java.util.Collection;
+import ru.practicum.shareit.user.model.User;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @Service
 @Validated
 public class UserServiceImpl implements UserService {
-
-    @Getter
     private final UserStorage userStorage;
 
     @Autowired
@@ -23,8 +22,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user) {
-      return userStorage.createUser(user);
+    public List<User> getAllUsers() {
+        return userStorage.findAllUsers();
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userStorage.findUserById(id);
+    }
+
+    @Override
+    public User addUser(@Valid User user) {
+        return userStorage.addUser(user);
     }
 
     @Override
@@ -33,17 +42,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(User user) {
-        userStorage.deleteUser(user);
+    public void deleteUserById(Long id) {
+        userStorage.deleteUserById(id);
     }
 
     @Override
-    public Collection<User> getAllUser() {
-        return userStorage.getAllUser();
-    }
-
-    @Override
-    public User getById(Long id) {
-        return userStorage.getById(id);
+    public void deleteAllUsers() {
+        userStorage.deleteAllUsers();
     }
 }

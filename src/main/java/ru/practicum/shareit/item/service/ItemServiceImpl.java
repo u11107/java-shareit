@@ -1,21 +1,21 @@
 package ru.practicum.shareit.item.service;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.item.service.ItemService;
 import ru.practicum.shareit.item.storage.ItemStorage;
 
-import java.util.Collection;
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Collections;
 
 @Slf4j
 @Service
 @Validated
 public class ItemServiceImpl implements ItemService {
-    @Getter
     private final ItemStorage itemStorage;
 
     @Autowired
@@ -24,32 +24,37 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item createItem(Long userId, Item item) {
-        return itemStorage.createItem(userId, item);
+    public List<Item> getOwnerItems(Long userId) {
+        return itemStorage.findOwnerItems(userId);
     }
 
     @Override
-    public Item updateItem(Long userId, Long itemId, Item newItem) {
-        return itemStorage.updateItem(userId, itemId, newItem);
+    public List<Item> searchItems(String string) {
+        if (string.isBlank()) return Collections.emptyList();
+        return itemStorage.searchItems(string);
     }
 
     @Override
-    public void deleteItem(Item item) {
-        itemStorage.deleteItem(item);
+    public Item getItemById(Long id) {
+        return itemStorage.findItemById(id);
     }
 
     @Override
-    public List<Item> findAllOwnerItems(long idOwner) {
-        return itemStorage.findAllOwnerItems(idOwner);
+    public Item addItem(Long userId, @Valid Item item) {
+        return itemStorage.addItem(userId, item);
     }
 
     @Override
-    public Item getById(Long id) {
-        return itemStorage.getById(id);
+    public Item updateItem(Long userId, Long id, Item newItem) {
+        return itemStorage.updateItem(userId, id, newItem);
     }
 
     @Override
-    public Collection<Item> getAllItem() {
-        return itemStorage.getAllItem();
+    public void deleteItemById(Long userId, Long id) {
+        itemStorage.deleteItemById(userId, id);
+    }
+
+    protected void deleteAllItems() {
+        itemStorage.deleteAllItems();
     }
 }

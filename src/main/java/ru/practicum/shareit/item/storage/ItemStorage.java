@@ -2,20 +2,20 @@ package ru.practicum.shareit.item.storage;
 
 import ru.practicum.shareit.item.model.Item;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface ItemStorage {
+    List<Item> findOwnerItems(Long userId);
 
-    Item createItem(Long userId, Item item);
+    List<Item> searchItems(String string);
+
+    Item findItemById(Long id);
+
+    Item addItem(Long userId, Item item);
 
     Item updateItem(Long userId, Long id, Item newItem);
 
-    void deleteItem(Item item);
+    void deleteItemById(Long userId, Long id);
 
-    List<Item> findAllOwnerItems(long idOwner);
-
-    Item getById(Long id);
-
-    Collection<Item> getAllItem();
+    void deleteAllItems();
 }
