@@ -18,4 +18,5 @@ public interface ItemStorage {
     void deleteItemById(Long userId, Long id);
 
     void deleteAllItems();
+
 }
