@@ -2,11 +2,13 @@ package ru.practicum.shareit.booking;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDate;
 
+/**
+ * // TODO .
+ */
 @Getter
 @AllArgsConstructor
 public class BookingDto {
