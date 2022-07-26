@@ -1,6 +1,5 @@
 package ru.practicum.shareit.user.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.user.dto.UserDto;
@@ -50,5 +49,4 @@ public class UserController {
     public void deleteUserById(@PathVariable Long id) {
         userService.deleteUserById(id);
     }
-
 }
