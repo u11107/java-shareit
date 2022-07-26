@@ -7,10 +7,8 @@ import ru.practicum.shareit.exception.ConflictException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.item.service.ItemService;
 import ru.practicum.shareit.item.storage.InMemoryItemStorageImpl;
 import ru.practicum.shareit.user.storage.InMemoryUserStorageImpl;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
