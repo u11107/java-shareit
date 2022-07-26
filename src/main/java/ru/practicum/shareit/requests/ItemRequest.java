@@ -1,25 +1,20 @@
-package ru.practicum.shareit.request;
+package ru.practicum.shareit.requests;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import ru.practicum.shareit.user.model.User;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 public class ItemRequest {
     private Long id;
-    @NotNull
-    @NotBlank
+    @Size(max = 300)
     private String description;
-    private User requestor;
     @NotNull
-    @FutureOrPresent
+    private User requester;
     private LocalDateTime created;
 }
