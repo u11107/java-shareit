@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.ConflictException;
+import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
@@ -12,7 +13,6 @@ import ru.practicum.shareit.user.storage.InMemoryUserStorageImpl;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.stream.Collectors;
-
 
 @Service
 @Slf4j
@@ -24,7 +24,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDto create(Long userId, ItemDto itemDto) {
         isUserDefined(userId);
-        var item = ItemMapper.toItem(itemDto);
+        Item item = ItemMapper.toItem(itemDto);
         item.setOwner(userStorage.get(userId));
         return ItemMapper.toItemDto(itemStorage.create(item));
     }

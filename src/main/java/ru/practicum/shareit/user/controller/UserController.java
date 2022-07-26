@@ -6,7 +6,6 @@ import ru.practicum.shareit.exception.ValidationException;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.service.UserService;
 import ru.practicum.shareit.user.storage.InMemoryUserStorageImpl;
-
 import javax.validation.Valid;
 import java.util.Collection;
 
