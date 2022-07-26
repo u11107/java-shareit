@@ -7,7 +7,7 @@ import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDate;
 
 /**
- * // TODO .
+ * // BookingDto .
  */
 @Getter
 @AllArgsConstructor
