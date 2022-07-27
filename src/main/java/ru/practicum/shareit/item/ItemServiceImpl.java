@@ -22,7 +22,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getOwnerItems(Long userId) {
-        return itemStorage.findOwnerItems(userId);
+        return itemStorage.searchOwnerItem(userId);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public Item getItemById(Long id) {
-        return itemStorage.findItemById(id);
+        return itemStorage.searchItemById(id);
     }
 
     @Override

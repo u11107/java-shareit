@@ -1,9 +1,10 @@
 package ru.practicum.shareit.item;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.AllArgsConstructor;
 
-@Getter
+@Data
 @AllArgsConstructor
 public class ItemDto {
     private Long id;

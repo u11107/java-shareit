@@ -3,11 +3,11 @@ package ru.practicum.shareit.item;
 import java.util.List;
 
 public interface ItemStorage {
-    List<Item> findOwnerItems(Long userId);
+    List<Item> searchOwnerItem(Long userId);
 
     List<Item> searchItems(String text);
 
-    Item findItemById(Long id);
+    Item searchItemById(Long id);
 
     Item addItem(Long userId, Item item);
 

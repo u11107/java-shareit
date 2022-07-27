@@ -1,18 +1,13 @@
 package ru.practicum.shareit.item;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.EqualsAndHashCode;
-import lombok.AllArgsConstructor;
+import lombok.*;
 import ru.practicum.shareit.user.User;
 import ru.practicum.shareit.request.ItemRequest;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.NotBlank;
 
-@Getter
-@Setter
-@EqualsAndHashCode
+@Data
 @AllArgsConstructor
 public class Item {
     private Long id;

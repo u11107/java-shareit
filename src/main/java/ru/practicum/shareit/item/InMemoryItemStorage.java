@@ -25,7 +25,7 @@ public class InMemoryItemStorage implements ItemStorage {
     }
 
     @Override
-    public List<Item> findOwnerItems(Long userId) {
+    public List<Item> searchOwnerItem(Long userId) {
         return items.values()
                 .stream()
                 .filter(item -> item.getOwner().getId().equals(userId))
@@ -45,7 +45,7 @@ public class InMemoryItemStorage implements ItemStorage {
     }
 
     @Override
-    public Item findItemById(Long id) {
+    public Item searchItemById(Long id) {
         if (!items.containsKey(id)) {
             String message = String.format("There is no item with id %d", id);
             log.warn("ItemNotFoundException at InMemoryItemStorage.findUserById: {}", message);
@@ -56,7 +56,7 @@ public class InMemoryItemStorage implements ItemStorage {
 
     @Override
     public Item addItem(Long userId, Item item) {
-        item.setOwner(userStorage.findUserById(userId));
+        item.setOwner(userStorage.searchUserById(userId));
         item.setId(getItemId());
         items.put(item.getId(), item);
         log.info("InMemoryItemStorage.addItem: item {} " +
@@ -66,7 +66,7 @@ public class InMemoryItemStorage implements ItemStorage {
 
     @Override
     public Item updateItem(Long userId, Long id, Item newItem) {
-        Item item = findItemById(id);
+        Item item = searchItemById(id);
         if (!userId.equals(item.getOwner().getId())) {
             String message = String.format("User %d is not allowed to change item %d", userId, id);
             log.warn("AccessDeniedException at InMemoryItemStorage.updateItem: {}", message);
@@ -86,7 +86,7 @@ public class InMemoryItemStorage implements ItemStorage {
 
     @Override
     public void deleteItemById(Long userId, Long id) {
-        Item item = findItemById(id);
+        Item item = searchItemById(id);
         if (!userId.equals(item.getOwner().getId())) {
             String message = String.format("User %d is not allowed to delete item %d", userId, id);
             log.warn("AccessDeniedException at InMemoryItemStorage.deleteItemById: {}", message);

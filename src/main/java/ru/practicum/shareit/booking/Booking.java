@@ -1,7 +1,6 @@
 package ru.practicum.shareit.booking;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.AllArgsConstructor;
 import ru.practicum.shareit.item.Item;
 import ru.practicum.shareit.user.User;
@@ -11,8 +10,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 public class Booking {
     private Long id;

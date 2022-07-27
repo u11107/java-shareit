@@ -17,12 +17,12 @@ public class InMemoryUserStorage implements UserStorage {
     private long nextUserId = 0;
 
     @Override
-    public List<User> findAllUsers() {
+    public List<User> getAllUser() {
         return new ArrayList<>(users.values());
     }
 
     @Override
-    public User findUserById(Long id) {
+    public User searchUserById(Long id) {
         if (!users.containsKey(id)) {
             String message = String.format("There is no user with id %d", id);
             log.warn("UserNotFoundException at InMemoryUserStorage.findUserById: {}", message);
@@ -43,7 +43,7 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User updateUser(Long id, User newUser) {
-        User user = findUserById(id);
+        User user = searchUserById(id);
         if (newUser.getName() != null && !newUser.getName().isBlank()) {
             user.setName(newUser.getName());
         }
@@ -60,7 +60,7 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public void deleteUserById(Long id) {
-        findUserById(id);
+        searchUserById(id);
         users.remove(id);
         log.info("InMemoryUserStorage.deleteUserById: user {} " +
                  "successfully deleted from storage", id);

@@ -3,9 +3,9 @@ package ru.practicum.shareit.user;
 import java.util.List;
 
 public interface UserStorage {
-    List<User> findAllUsers();
+    List<User> getAllUser();
 
-    User findUserById(Long id);
+    User searchUserById(Long id);
 
     User addUser(User user);
 

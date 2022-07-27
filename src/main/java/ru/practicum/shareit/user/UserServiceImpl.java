@@ -21,12 +21,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        return userStorage.findAllUsers();
+        return userStorage.getAllUser();
     }
 
     @Override
     public User getUserById(Long id) {
-        return userStorage.findUserById(id);
+        return userStorage.searchUserById(id);
     }
 
     @Override

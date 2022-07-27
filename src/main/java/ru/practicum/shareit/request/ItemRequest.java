@@ -1,7 +1,6 @@
 package ru.practicum.shareit.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.AllArgsConstructor;
 import ru.practicum.shareit.user.User;
 
@@ -10,8 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 public class ItemRequest {
     private Long id;
