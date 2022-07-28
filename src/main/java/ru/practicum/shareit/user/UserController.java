@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.practicum.shareit.item.Create;
 import ru.practicum.shareit.item.Update;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
