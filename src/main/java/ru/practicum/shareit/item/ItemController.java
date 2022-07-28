@@ -1,9 +1,9 @@
 package ru.practicum.shareit.item;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +19,7 @@ public class ItemController {
 
     @GetMapping
     public List<ItemDto> getOwnerItems(@RequestHeader("X-Sharer-User-Id") Long userId) {
-        return itemService.getOwnerItems(userId)
+        return itemService.searchOwnerItem(userId)
                 .stream()
                 .map(ItemMapper::toItemDto)
                 .collect(Collectors.toList());
@@ -40,14 +40,14 @@ public class ItemController {
 
     @PostMapping
     public ItemDto addItem(@RequestHeader("X-Sharer-User-Id") Long userId,
-                           @Valid @RequestBody ItemDto itemDto) {
+                           @Validated(Create.class) @RequestBody ItemDto itemDto) {
         Item item = ItemMapper.toItem(itemDto);
         return ItemMapper.toItemDto(itemService.addItem(userId, item));
     }
 
     @PatchMapping("/{id}")
     public ItemDto updateItem(@RequestHeader("X-Sharer-User-Id") Long userId,
-                              @PathVariable Long id, @Valid @RequestBody ItemDto itemDto) {
+                              @PathVariable Long id, @Validated(Update.class) @RequestBody ItemDto itemDto) {
         Item newItem = ItemMapper.toItem(itemDto);
         return ItemMapper.toItemDto(itemService.updateItem(userId, id, newItem));
     }

@@ -1,10 +1,12 @@
 package ru.practicum.shareit.item;
 
+
 import javax.validation.Valid;
 import java.util.List;
 
 public interface ItemService {
-    List<Item> getOwnerItems(Long userId);
+
+    List<Item> searchOwnerItem(Long userId);
 
     List<Item> searchItems(String text);
 
@@ -15,4 +17,5 @@ public interface ItemService {
     Item updateItem(Long userId, Long id, Item newItem);
 
     void deleteItemById(Long userId, Long id);
+
 }

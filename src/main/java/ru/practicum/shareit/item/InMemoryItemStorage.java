@@ -1,11 +1,11 @@
 package ru.practicum.shareit.item;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.practicum.shareit.user.InMemoryUserStorage;
+import org.springframework.stereotype.Repository;
 import ru.practicum.shareit.exception.ItemNotFoundException;
 import ru.practicum.shareit.exception.AccessDeniedException;
+import ru.practicum.shareit.user.UserServiceImpl;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -15,13 +15,14 @@ import java.util.stream.Collectors;
 @Slf4j
 @Repository
 public class InMemoryItemStorage implements ItemStorage {
-    private final InMemoryUserStorage userStorage;
+
+    private final UserServiceImpl userService;
     private final Map<Long, Item> items = new HashMap<>();
     private long nextItemId = 0;
 
     @Autowired
-    public InMemoryItemStorage(InMemoryUserStorage userStorage) {
-        this.userStorage = userStorage;
+    public InMemoryItemStorage(UserServiceImpl userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -56,7 +57,7 @@ public class InMemoryItemStorage implements ItemStorage {
 
     @Override
     public Item addItem(Long userId, Item item) {
-        item.setOwner(userStorage.searchUserById(userId));
+        item.setOwner(userService.getUserById(userId));
         item.setId(getItemId());
         items.put(item.getId(), item);
         log.info("InMemoryItemStorage.addItem: item {} " +

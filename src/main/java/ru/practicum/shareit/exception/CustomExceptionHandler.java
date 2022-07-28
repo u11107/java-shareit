@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class CustomExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
     public List<ErrorResponse> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException e) {
         List<ErrorResponse> errors = new ArrayList<>();
@@ -34,7 +33,6 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
     public List<ErrorResponse> handleConstraintViolationException(
             ConstraintViolationException e) {
         List<ErrorResponse> errors = new ArrayList<>();
@@ -51,42 +49,37 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
     public ErrorResponse handleValidationException(ValidationException e) {
         return new ErrorResponse("ValidationException", e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ResponseBody
     public ErrorResponse handleUserNotFoundException(UserNotFoundException e) {
         return new ErrorResponse("UserNotFound", e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ResponseBody
     public ErrorResponse handleItemNotFoundException(ItemNotFoundException e) {
         return new ErrorResponse("ItemNotFound", e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ResponseBody
     public ErrorResponse handleAccessDeniedException(AccessDeniedException e) {
         return new ErrorResponse("AccessDenied", e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ResponseBody
     public ErrorResponse handleEmailAlreadyTakenException(EmailAlreadyTakenException e) {
         return new ErrorResponse("EmailAlreadyTaken", e.getMessage());
     }
 
     @Getter
     @AllArgsConstructor
-    class ErrorResponse {
+    static class ErrorResponse {
         private String error;
         private String description;
     }

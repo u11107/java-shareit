@@ -4,10 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-
+import ru.practicum.shareit.user.User;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Collections;
+import java.util.Map;
+
 
 @Slf4j
 @Service
@@ -15,13 +18,15 @@ import java.util.Collections;
 public class ItemServiceImpl implements ItemService {
     private final ItemStorage itemStorage;
 
+    protected Map<Long, User> users = new HashMap<>();
+
     @Autowired
     public ItemServiceImpl(ItemStorage itemStorage) {
         this.itemStorage = itemStorage;
     }
 
     @Override
-    public List<Item> getOwnerItems(Long userId) {
+    public List<Item> searchOwnerItem(Long userId) {
         return itemStorage.searchOwnerItem(userId);
     }
 
