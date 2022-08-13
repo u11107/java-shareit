@@ -7,11 +7,9 @@ import javax.validation.constraints.Email;
 
 @Entity
 @Table(name = "users")
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
