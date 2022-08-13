@@ -1,21 +1,24 @@
 package ru.practicum.shareit.item;
 
-
 import javax.validation.Valid;
 import java.util.List;
 
 public interface ItemService {
+    List<ItemDto> getOwnerItems(Long userId);
 
-    List<Item> searchOwnerItem(Long userId);
+    List<ItemDto> searchItems(String text);
 
-    List<Item> searchItems(String text);
+    ItemDto getItemById(Long userId, Long itemId);
 
-    Item getItemById(Long id);
+    ItemDto addItem(Long userId, @Valid ItemDto itemDto);
 
-    Item addItem(Long userId, @Valid Item item);
-
-    Item updateItem(Long userId, Long id, Item newItem);
+    ItemDto updateItem(Long userId, Long itemId, ItemDto itemDto);
 
     void deleteItemById(Long userId, Long id);
 
+    CommentDto addComment(Long userId, Long itemId, @Valid CommentDto commentDto);
+
+    void addLastAndNextBooking(ItemDto itemDto);
+
+    void addCommentsList(ItemDto itemDto);
 }

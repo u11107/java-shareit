@@ -1,16 +1,12 @@
 package ru.practicum.shareit.request;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ItemRequestMapper {
     public static ItemRequestDto toItemRequestDto(ItemRequest itemRequest) {
         return new ItemRequestDto(
                 itemRequest.getId(),
                 itemRequest.getDescription(),
-                new ItemRequestDto.User(itemRequest.getRequestor().getId(),
-                                        itemRequest.getRequestor().getName()),
+                new ItemRequestDto.User(itemRequest.getRequester().getId(),
+                                        itemRequest.getRequester().getName()),
                 itemRequest.getCreated()
         );
     }
