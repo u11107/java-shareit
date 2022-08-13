@@ -11,11 +11,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "items")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 public class Item {
 
     @Id
