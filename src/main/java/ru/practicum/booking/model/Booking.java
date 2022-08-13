@@ -18,7 +18,7 @@ public class Booking {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @Column(name = "start_date_time")
     private LocalDateTime startDateTime;
