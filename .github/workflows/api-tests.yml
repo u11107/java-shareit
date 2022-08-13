@@ -53,9 +53,9 @@ jobs:
 
       - name: Waiting for application is up
         run: |
-          /tmp/wait-for-it.sh -t 1200 localhost:8080
+          /tmp/wait-for-it.sh -t 60 localhost:8080
           echo "Application is up"
 
       - name: Run POSTMAN tests
         run: |
-          newman run ./tests/postman/sprint.json -r cli
+          newman run ./tests/postman/sprint.json --delay-request 50 -r cli
