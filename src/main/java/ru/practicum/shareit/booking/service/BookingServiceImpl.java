@@ -31,6 +31,7 @@ public class BookingServiceImpl implements BookingService {
         this.userService = userService;
         this.itemService = itemService;
     }
+
     @Transactional
     @Override
     public Booking createBooking(Long userId, Long itemId, Booking booking) {
@@ -42,6 +43,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setStatus(BookingStatus.WAITING);
         return bookingRepository.save(booking);
     }
+
     @Override
     public Booking getBookingById(Long userId, Long bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
@@ -52,6 +54,7 @@ public class BookingServiceImpl implements BookingService {
         }
         return booking;
     }
+
     @Transactional
     @Override
     public Booking updateBookingStatus(Long userId, Long bookingId, Boolean approved) {
@@ -67,6 +70,7 @@ public class BookingServiceImpl implements BookingService {
         }
         return bookingRepository.save(booking);
     }
+
     @Override
     public List<Booking> getBookingsByUserIdAndState(Long userId, String state) {
         userService.getUserById(userId);
@@ -132,11 +136,13 @@ public class BookingServiceImpl implements BookingService {
         }
         return bookingList;
     }
+
     @Override
     public Optional<Booking> findLastBooking(Long itemId) {
         return bookingRepository.findLastBookings(itemId, LocalDateTime.now())
                 .stream().findFirst();
     }
+
     @Override
     public Optional<Booking> findNextBooking(Long itemId) {
         return bookingRepository.findNextBookings(itemId, LocalDateTime.now())
