@@ -16,19 +16,17 @@ import java.util.stream.Collectors;
 public class BookingController {
 
     private final BookingService bookingService;
-    private final BookingMapper bookingMapper;
 
-    public BookingController(BookingService bookingService, BookingMapper bookingMapper) {
+    public BookingController(BookingService bookingService) {
         this.bookingService = bookingService;
-        this.bookingMapper = bookingMapper;
     }
 
     @PostMapping
     public BookingDto createBooking(@RequestHeader("X-Sharer-User-Id") Long userId,
                                     @RequestBody @Valid BookingDtoNew bookingDtoNew) {
-        Booking booking = bookingMapper.toBookingNew(bookingDtoNew);
+        Booking booking = BookingMapper.toBookingNew(bookingDtoNew);
         booking = bookingService.createBooking(userId, bookingDtoNew.getItemId(), booking);
-        return bookingMapper.toBookingDto(booking);
+        return BookingMapper.toBookingDto(booking);
     }
 
     @PatchMapping("/{bookingId}")
@@ -36,14 +34,14 @@ public class BookingController {
                                           @PathVariable Long bookingId,
                                           @RequestParam Boolean approved) {
         Booking booking = bookingService. updateBookingStatus(userId, bookingId, approved);
-        return bookingMapper.toBookingDto(booking);
+        return BookingMapper.toBookingDto(booking);
     }
 
     @GetMapping("/{bookingId}")
     public BookingDto getBookingById(@RequestHeader("X-Sharer-User-Id") Long userId,
                                      @PathVariable Long bookingId) {
         Booking booking = bookingService.getBookingById(userId, bookingId);
-        return bookingMapper.toBookingDto(booking);
+        return BookingMapper.toBookingDto(booking);
     }
 
     @GetMapping
@@ -51,7 +49,7 @@ public class BookingController {
                                                         @RequestParam(defaultValue = "ALL") String state) {
         return bookingService.getBookingsByUserIdAndState(userId,state)
                 .stream()
-                .map(bookingMapper::toBookingDto)
+                .map(BookingMapper::toBookingDto)
                 .collect(Collectors.toList());
     }
 
@@ -60,7 +58,7 @@ public class BookingController {
                                              @RequestParam(defaultValue = "ALL") String state) {
         return bookingService.getOwnerBookings(userId,state)
                 .stream()
-                .map(bookingMapper::toBookingDto)
+                .map(BookingMapper::toBookingDto)
                 .collect(Collectors.toList());
     }
 }

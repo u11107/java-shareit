@@ -25,5 +25,5 @@ public class ItemRequest {
     @JoinColumn(name = "requester_id")
     private User requester;
     @NotNull
-    private LocalDateTime created;
+    private LocalDateTime created = LocalDateTime.now();
 }

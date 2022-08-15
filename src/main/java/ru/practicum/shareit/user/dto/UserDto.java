@@ -4,10 +4,8 @@ import lombok.*;
 
 import javax.validation.constraints.Email;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
-@EqualsAndHashCode
 public class UserDto {
 
     private Long id;

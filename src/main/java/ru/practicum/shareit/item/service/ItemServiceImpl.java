@@ -3,6 +3,7 @@ package ru.practicum.shareit.item.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.exception.NotFoundException;
@@ -14,12 +15,15 @@ import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.user.service.UserService;
 
 import java.time.LocalDateTime;
-import java.util.*;
-
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ItemServiceImpl implements ItemService {
+
 
     private final ItemRepository itemRepository;
     private final BookingRepository bookingRepository;
@@ -38,13 +42,14 @@ public class ItemServiceImpl implements ItemService {
         itemList.sort(Comparator.comparing(Item::getId));
         return itemList;
     }
-
+    @Transactional
     @Override
     public Item createItem(Long ownerId, Item item) {
         item.setOwner(userService.getUserById(ownerId));
         return itemRepository.save(item);
     }
 
+    @Transactional
     @Override
     public Item updateItem(Long ownerId, Item item) {
         Item updateItem = itemRepository.findById(item.getId())
@@ -72,6 +77,7 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.searchItemsByTextInNameAndDescription(text);
     }
 
+    @Transactional
     @Override
     public Comment createComment(Long userId, Long itemId, Comment comment) {
         Booking booking = bookingRepository.findCompletedBooking(userId, itemId, LocalDateTime.now());

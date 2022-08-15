@@ -10,6 +10,7 @@ import ru.practicum.shareit.item.dto.CommentMapper;
 import ru.practicum.shareit.item.dto.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemService;
+import ru.practicum.shareit.user.model.User;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,6 +27,7 @@ public class ItemController {
     @GetMapping("/{itemId}")
     public ItemDto getItemById(@RequestHeader("X-Sharer-User-Id") Long ownerId,
                                @PathVariable long itemId) {
+        User user = new User();
         Item item = itemService.getItemById(itemId);
         ItemDto itemDto = ItemMapper.toItemDto(item);
         addCommentsToItemDto(itemDto);
@@ -63,6 +65,7 @@ public class ItemController {
         item = itemService.updateItem(ownerId, item);
         return ItemMapper.toItemDto(item);
     }
+
 
     @GetMapping("/search")
     public List<ItemDto> searchItemsByTextInNameAndDescription(@RequestParam("text") String text) {

@@ -59,8 +59,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     @Query("SELECT    b FROM Booking AS b " +
             "WHERE    b.item.owner.id = ?1 " +
-            "AND      b.start < ?2 " +
-            "AND      b.end > ?2 " +
+            "AND      ?2 BETWEEN b.start AND b.end " +
             "ORDER BY b.start DESC ")
     List<Booking> findCurrentByOwnerId(Long userId, LocalDateTime now);
 

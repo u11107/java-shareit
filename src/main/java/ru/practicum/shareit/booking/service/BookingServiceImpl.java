@@ -1,6 +1,7 @@
 package ru.practicum.shareit.booking.service;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingState;
 import ru.practicum.shareit.booking.model.BookingStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Transactional(readOnly = true)
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
@@ -29,7 +31,8 @@ public class BookingServiceImpl implements BookingService {
         this.userService = userService;
         this.itemService = itemService;
     }
-
+    @Transactional
+    @Override
     public Booking createBooking(Long userId, Long itemId, Booking booking) {
         Item item = itemService.getItemById(itemId);
         User booker = userService.getUserById(userId);
@@ -39,7 +42,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setStatus(BookingStatus.WAITING);
         return bookingRepository.save(booking);
     }
-
+    @Override
     public Booking getBookingById(Long userId, Long bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new NotFoundException("Введено некорректное значение id"));
@@ -49,7 +52,8 @@ public class BookingServiceImpl implements BookingService {
         }
         return booking;
     }
-
+    @Transactional
+    @Override
     public Booking updateBookingStatus(Long userId, Long bookingId, Boolean approved) {
         User user = userService.getUserById(userId);
         Booking booking = getBookingById(userId, bookingId);
@@ -63,7 +67,7 @@ public class BookingServiceImpl implements BookingService {
         }
         return bookingRepository.save(booking);
     }
-
+    @Override
     public List<Booking> getBookingsByUserIdAndState(Long userId, String state) {
         userService.getUserById(userId);
         List<Booking> bookingList = new ArrayList<>();
@@ -128,12 +132,12 @@ public class BookingServiceImpl implements BookingService {
         }
         return bookingList;
     }
-
+    @Override
     public Optional<Booking> findLastBooking(Long itemId) {
         return bookingRepository.findLastBookings(itemId, LocalDateTime.now())
                 .stream().findFirst();
     }
-
+    @Override
     public Optional<Booking> findNextBooking(Long itemId) {
         return bookingRepository.findNextBookings(itemId, LocalDateTime.now())
                 .stream().findFirst();

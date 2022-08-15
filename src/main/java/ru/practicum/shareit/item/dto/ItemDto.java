@@ -8,8 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 public class ItemDto {
 
