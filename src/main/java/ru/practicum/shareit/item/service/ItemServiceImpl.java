@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
@@ -42,6 +43,7 @@ public class ItemServiceImpl implements ItemService {
         itemList.sort(Comparator.comparing(Item::getId));
         return itemList;
     }
+
     @Transactional
     @Override
     public Item createItem(Long ownerId, Item item) {

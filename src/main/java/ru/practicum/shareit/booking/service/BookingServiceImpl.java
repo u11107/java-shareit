@@ -32,7 +32,6 @@ public class BookingServiceImpl implements BookingService {
         this.itemService = itemService;
     }
 
-
     @Transactional
     @Override
     public Booking createBooking(Long userId, Long itemId, Booking booking) {
