@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.service.BookingService;
 import ru.practicum.shareit.item.dto.CommentDto;
-import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.dto.CommentMapper;
+import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemMapper;
+import ru.practicum.shareit.item.model.Comment;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemService;
 import ru.practicum.shareit.user.model.User;
@@ -27,7 +27,6 @@ public class ItemController {
     @GetMapping("/{itemId}")
     public ItemDto getItemById(@RequestHeader("X-Sharer-User-Id") Long ownerId,
                                @PathVariable long itemId) {
-        User user = new User();
         Item item = itemService.getItemById(itemId);
         ItemDto itemDto = ItemMapper.toItemDto(item);
         addCommentsToItemDto(itemDto);
