@@ -8,17 +8,19 @@ public interface ItemService {
 
     Item getItemById(Long itemId);
 
-    List<Item> getAllItemsByOwnerId(Long ownerId);
+    List<Item> getAllItemsByOwnerId(Long ownerId, Integer from, Integer size);
 
     Item createItem(Long ownerId, Item item);
 
     Item updateItem(Long ownerId, Item item);
 
-    List<Item> searchItemsByTextInNameAndDescription(String text);
+    List<Item> searchItemsByTextInNameAndDescription(String text, Integer from, Integer size);
 
-    void deleteItem(Long itemId);
+    void deleteItemById(Long ownerId, Long itemId);
 
     Comment createComment(Long userId, Long itemId, Comment comment);
 
     List<Comment> getCommentsByItemId(Long itemId);
+
+    List<Item> getItemsByRequestId(Long requestId);
 }

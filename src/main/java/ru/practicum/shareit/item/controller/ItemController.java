@@ -4,14 +4,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.service.BookingService;
 import ru.practicum.shareit.item.dto.CommentDto;
-import ru.practicum.shareit.item.dto.CommentMapper;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.dto.ItemMapper;
 import ru.practicum.shareit.item.model.Comment;
+import ru.practicum.shareit.item.dto.CommentMapper;
+import ru.practicum.shareit.item.dto.ItemMapper;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemService;
+import ru.practicum.shareit.request.service.ItemRequestService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,10 +24,11 @@ public class ItemController {
 
     private final ItemService itemService;
     private final BookingService bookingService;
+    private final ItemRequestService itemRequestService;
 
     @GetMapping("/{itemId}")
     public ItemDto getItemById(@RequestHeader("X-Sharer-User-Id") Long ownerId,
-                               @PathVariable long itemId) {
+                               @PathVariable Long itemId) {
         Item item = itemService.getItemById(itemId);
         ItemDto itemDto = ItemMapper.toItemDto(item);
         addCommentsToItemDto(itemDto);
@@ -36,8 +39,10 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemDto> getAllItemsByOwnerId(@RequestHeader("X-Sharer-User-Id") Long ownerId) {
-        List<ItemDto> itemDtoList = itemService.getAllItemsByOwnerId(ownerId)
+    public List<ItemDto> getAllItemsByOwnerId(@RequestHeader("X-Sharer-User-Id") Long ownerId,
+                                              @RequestParam(defaultValue = "0") @Min(0) Integer from,
+                                              @RequestParam(defaultValue = "10") @Min(1) Integer size) {
+        List<ItemDto> itemDtoList = itemService.getAllItemsByOwnerId(ownerId, from, size)
                 .stream()
                 .map(ItemMapper::toItemDto)
                 .collect(Collectors.toList());
@@ -50,12 +55,15 @@ public class ItemController {
     public ItemDto createItem(@RequestHeader("X-Sharer-User-Id") Long ownerId,
                               @RequestBody @Valid ItemDto itemDto) {
         Item item = ItemMapper.toItemNew(itemDto);
+        if (itemDto.getRequestId() != null) {
+            item.setRequest(itemRequestService.getItemRequestById(ownerId, itemDto.getRequestId()));
+        }
         item = itemService.createItem(ownerId, item);
         return ItemMapper.toItemDto(item);
     }
 
     @PatchMapping("/{itemId}")
-    public ItemDto updateItem(@PathVariable long itemId,
+    public ItemDto updateItem(@PathVariable Long itemId,
                               @RequestHeader("X-Sharer-User-Id") Long ownerId,
                               @RequestBody ItemDto itemDto) {
         itemDto.setId(itemId);
@@ -64,13 +72,20 @@ public class ItemController {
         return ItemMapper.toItemDto(item);
     }
 
-
     @GetMapping("/search")
-    public List<ItemDto> searchItemsByTextInNameAndDescription(@RequestParam("text") String text) {
-        return itemService.searchItemsByTextInNameAndDescription(text)
+    public List<ItemDto> searchItemsByTextInNameAndDescription(@RequestParam(name = "text", required = false) String text,
+                                                               @RequestParam(defaultValue = "0") @Min(0) Integer from,
+                                                               @RequestParam(defaultValue = "10") @Min(1) Integer size) {
+        return itemService.searchItemsByTextInNameAndDescription(text, from, size)
                 .stream()
                 .map(ItemMapper::toItemDto)
                 .collect(Collectors.toList());
+    }
+
+    @DeleteMapping("/{itemId}")
+    public void deleteItemById(@PathVariable Long itemId,
+                               @RequestHeader("X-Sharer-User-Id") Long ownerId) {
+        itemService.deleteItemById(ownerId, itemId);
     }
 
     @PostMapping("/{itemId}/comment")
