@@ -3,6 +3,7 @@ package ru.practicum.shareit.booking.service;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingState;
 import ru.practicum.shareit.booking.model.BookingStatus;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Transactional(readOnly = true)
 @Component
 public class BookingServiceImpl implements BookingService {
 
@@ -32,6 +34,7 @@ public class BookingServiceImpl implements BookingService {
         this.itemService = itemService;
     }
 
+    @Transactional
     public Booking createBooking(Long userId, Long itemId, Booking booking) {
         Item item = itemService.getItemById(itemId);
         User booker = userService.getUserById(userId);
@@ -52,6 +55,7 @@ public class BookingServiceImpl implements BookingService {
         return booking;
     }
 
+    @Transactional
     public Booking updateBookingStatus(Long userId, Long bookingId, Boolean approved) {
         User user = userService.getUserById(userId);
         Booking booking = getBookingById(userId, bookingId);
