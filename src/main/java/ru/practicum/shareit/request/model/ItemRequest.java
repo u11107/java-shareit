@@ -25,7 +25,7 @@ public class ItemRequest {
     @JoinColumn(name = "requester_id")
     private User requester;
     @NotNull
-    private LocalDateTime created = LocalDateTime.now();;
+    private LocalDateTime created = LocalDateTime.now();
 
     @Override
     public boolean equals(Object o) {
