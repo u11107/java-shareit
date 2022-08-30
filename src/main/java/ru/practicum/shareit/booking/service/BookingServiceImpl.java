@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional(readOnly = true)
 @Component
 public class BookingServiceImpl implements BookingService {
 

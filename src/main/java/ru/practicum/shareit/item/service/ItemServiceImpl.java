@@ -17,9 +17,10 @@ import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.user.service.UserService;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
-@Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -46,6 +47,7 @@ public class ItemServiceImpl implements ItemService {
         return itemList;
     }
 
+    @Transactional
     @Override
     public Item createItem(Long ownerId, Item item) {
         item.setOwner(userService.getUserById(ownerId));
@@ -71,6 +73,7 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.save(updateItem);
     }
 
+    @Transactional
     @Override
     public List<Item> searchItemsByTextInNameAndDescription(String text, Integer from, Integer size) {
         if (text.isBlank()) {
