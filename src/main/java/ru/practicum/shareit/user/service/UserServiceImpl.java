@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        if (user.getEmail() != null) {
+        if (user.getEmail() == null) {
             throw new ValidationException("Введен некорректный email");
         }
         return userRepository.save(user);
