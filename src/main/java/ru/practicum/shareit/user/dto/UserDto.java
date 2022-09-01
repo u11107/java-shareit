@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class UserDto {
-
+//добалвлено два интерфейса
     private Long id;
     @NotBlank(groups = {Create.class})
     private String name;
