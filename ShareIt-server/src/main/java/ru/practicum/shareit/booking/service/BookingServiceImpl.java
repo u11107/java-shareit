@@ -2,7 +2,6 @@ package ru.practicum.shareit.booking.service;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingState;
@@ -48,7 +47,7 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new NotFoundException("Invalid id entered"));
         if (!userId.equals(booking.getItem().getOwner().getId())
                 && !userId.equals(booking.getBooker().getId())) {
-            throw new NotFoundException("Просмотр бронирования не доступен");
+            throw new NotFoundException("Booking view not available");
         }
         return booking;
     }
