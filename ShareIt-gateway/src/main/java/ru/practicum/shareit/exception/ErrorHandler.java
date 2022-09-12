@@ -14,6 +14,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleValidationException(final IllegalArgumentException ex) {
+        log.debug("Ошибка валидации");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(ex.getMessage()));
     }
 
